@@ -189,12 +189,30 @@ listHolidaysObservable.subscribe(date => listHolidaysDate.push(date));
 const getDateUser = Rx.Observable.from(calendarData)
     .filter(x => x.creator.email === "srinivasan.jayaraman@pearson.com")
     .map(x => {
-        const startDate = moment(x.start.date, 'YYYY-MM-DD');
-        const endDate = moment(x.end.date, 'YYYY-MM-DD');
+        const startDate = new Date(x.start.date);
+        const endDate = new Date(x.end.date);
         debugger;
-        console.log(moment.range(startDate, endDate));
-        return startDate
+        const leaveDays = getDates(startDate, endDate);
+        return leaveDays;
     });
+
+
+Date.prototype.addDays = function(days) {
+    var dat = new Date(this.valueOf())
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
+
+function getDates(startDate, stopDate) {
+    var dateArray = new Array();
+    var currentDate = startDate;
+    while (currentDate <= stopDate) {
+        dateArray.push(currentDate)
+        currentDate = currentDate.addDays(1);
+    }
+    return dateArray;
+}
+
 getDateUser.subscribe(user => console.log(user));
 
 getMonthDateRange(2017, 6);
