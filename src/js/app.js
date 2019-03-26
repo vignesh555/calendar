@@ -10,7 +10,7 @@ handleClientLoad();
 
 const listHolidays = [{
         date: '01/26/2017',
-        title: 'Republic Day'
+        title: 'Republic Day1ß'
     },
     {
         date: '04/14/2017',
